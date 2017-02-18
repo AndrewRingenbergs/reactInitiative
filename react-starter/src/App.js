@@ -20,14 +20,15 @@ class ActorChip extends React.Component {
   }
 
   handleChange(e) {
-    this.props.onChange(e.target.value);
+    console.log('change in: ',e.target.id,' to ',e.target.value);
+    this.props.handleChange(e.target.id,e.target.value);
   }
 
   render() {
-    console.log(this.props);
+    console.log('ActorChip: ',this.props);
     return ( 
       <li>
-        Name: <input type="text" value={this.props.name} onChange={this.handleChange} />
+        Name: <input type="text" value={this.props.actor.name} key={this.props.actor.id} id={this.props.actor.id} onChange={this.handleChange} />
       </li>
     );
   }
@@ -36,95 +37,41 @@ class ActorChip extends React.Component {
 class ActorList extends React.Component {
   constructor(props) {
     super(props);
-    //this.handleChange = this.handleChange.bind(this);
+    this.state = {
+        ACTORS: [
+        {name: 'Actor A', id: 0},
+        {name: 'Actor B', id: 1},
+        {name: 'Actor C', id: 2}
+      ]
+      };
+    this.handleChange = this.handleChange.bind(this);
+  }
+  
+  handleChange(id, value) {
+    const actors = this.state.ACTORS.slice();
+    actors[id].name = value;
+    this.setState({ACTORS: actors});
   }
 
+
   render() {
-      console.log(this.props);
-    /*var chips = [];
-    this.props.actors.forEach(function(actor) {
-      chips.push(<ActorChip actor={actor} key={actor.name} onChange={actor.handleChange} />);
-    }); {chips}*/
-    //console.log(chips);
+  
+    var chips = [];
+    var testfunction = this.handleChange; // why do i have to do this?
+    console.log(this.state.ACTORS);
+    this.state.ACTORS.forEach(function(actor) {
+      chips.push(<ActorChip actor={actor} key={actor.id} handleChange={testfunction} />);
+    });
     return (
       <ul className="ActorList">
-        <ActorChip value={this.props.name} onChange={this.props.handleChange} />;
+        {chips}
       </ul>
     );
   }
 }
 
-class EssayForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: 'Please write an essay about your favorite DOM element.'
-    };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange(event) {
-    this.setState({value: event.target.value});
-  }
-
-  handleSubmit(event) {
-    alert('An essay was submitted: ' + this.state.value);
-    event.preventDefault();
-  }
-
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Name:
-          <textarea value={this.state.value} onChange={this.handleChange} />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-    );
-  }
-}
-
 class App extends Component {
-  constructor(props) {
-    super(props);
-    /*this.state = {
-      ACTORS: [
-        {name: 'Actor A'},
-        {name: 'Actor B'},
-        {name: 'Actor C'}
-      ]
-      };*/
-      this.state = {name: ''};
-    this.handleChange = this.handleChange.bind(this);
-  }
   
- 
-  handleChange(value) {
-    this.setState({name: value});
-  }
-  /*
-  componentDidMount() {
-    const rootRef = firebase.database().ref();
-    
-    // Try to set
-    rootRef.set({
-      ACTORS: [
-        {name: 'New A'},
-        {name: 'New B'}
-      ]
-    });
-    
-    // Read on change
-     rootRef.child('ACTORS').on('value', snap => {
-      this.setState( { 
-        ACTORS: snap.val()
-      });
-    });
-  }*/
-
   render() {
     return (
       <div className="App">
@@ -136,10 +83,7 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <div>
-          <ActorList value={this.state.name} onChange={this.handleChange}/>
-        </div>
-        <div>
-          <EssayForm />
+          <ActorList />
         </div>
       </div>
     );

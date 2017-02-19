@@ -7,6 +7,7 @@ class ActorChip extends React.Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleChange_init = this.handleChange_init.bind(this);
+    this.handle_remove = this.handle_remove.bind(this);
   }
 
   handleChange(e) {
@@ -17,6 +18,10 @@ class ActorChip extends React.Component {
   handleChange_init(e) {
     console.log(this.props.actor.id,': initiative change to: ',e.target.value);
     this.props.handleChange_init(this.props.actor.id,e.target.value);
+  }
+
+  handle_remove(e) {
+    this.props.handle_remove(this.props.actor);
   }
 
   render() {
@@ -34,6 +39,7 @@ class ActorChip extends React.Component {
             <input type="number" value={this.props.actor.initiative} onChange={this.handleChange_init} />
           </span>
         </span>
+        <span className="btn-remove" onClick={this.handle_remove}> X </span>
       </li>
     );
   }
@@ -51,6 +57,7 @@ class ActorList extends React.Component {
       };
     this.handleChange = this.handleChange.bind(this);
     this.handleChange_init = this.handleChange_init.bind(this);
+    this.handle_remove = this.handle_remove.bind(this);
   }
   
   handleChange(id, value) {
@@ -65,16 +72,24 @@ class ActorList extends React.Component {
     this.setState({ACTORS: actors});
   }
 
+  handle_remove(target) {
+    console.log('Removing (index ',this.state.ACTORS.indexOf(target),'): ', target, );
+    const actors = this.state.ACTORS.slice();
+    actors.splice(this.state.ACTORS.indexOf(target),1);
+    this.setState({ACTORS: actors});
+  }
+
   render() {
   
     var chips = [];
     
     var testfunction = this.handleChange; // why do i have to do this?
     var fn_handleChange_init = this.handleChange_init;
+    var fn_handle_remove = this.handle_remove;
 
     console.log(this.state.ACTORS);
     this.state.ACTORS.forEach(function(actor) {
-      chips.push(<ActorChip actor={actor} key={actor.id} handleChange={testfunction} handleChange_init={fn_handleChange_init} />);
+      chips.push(<ActorChip actor={actor} key={actor.id} handleChange={testfunction} handleChange_init={fn_handleChange_init} handle_remove={fn_handle_remove}/>);
     });
     return (
       <div>    

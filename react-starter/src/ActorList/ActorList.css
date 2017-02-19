@@ -63,3 +63,15 @@
   display: inline-block;
   width: 110px;
 }
+
+.ActorChip .btn-remove {
+  height: 100%;
+  margin: 0px 3px;
+  color: dimgrey;
+}
+
+.ActorChip .btn-remove:hover {
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+}

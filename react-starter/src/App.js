@@ -36,11 +36,13 @@ class ActorChip extends React.Component {
       <li className="ActorChip">
         <span className="imgActor"></span>
         <span className="PropertyList">
-          <span>
-            Name: <input type="text" value={this.props.actor.name} onChange={this.handleChange} />
+          <span className="PropertyEntry">
+            <span className="PropertyLabel">Name :</span>
+            <input type="text" value={this.props.actor.name} onChange={this.handleChange} />
           </span>
-          <span>
-            Initiative: <input type="number" value={this.props.actor.initiative} onChange={this.handleChange_init} />
+          <span className="PropertyEntry">
+            <span className="PropertyLabel">Initiative: </span>
+            <input type="number" value={this.props.actor.initiative} onChange={this.handleChange_init} />
           </span>
         </span>
       </li>
@@ -86,9 +88,16 @@ class ActorList extends React.Component {
       chips.push(<ActorChip actor={actor} key={actor.id} handleChange={testfunction} handleChange_init={fn_handleChange_init} />);
     });
     return (
-      <ul className="ActorList">
-        {chips}
-      </ul>
+      <div>    
+        <div className="panel-header">
+          <div className="inner-panel-header">
+            <h1 className="panel-header-title">Character List</h1>
+          </div>
+        </div>
+        <ul className="ActorList">
+          {chips}
+        </ul>
+      </div>
     );
   }
 }

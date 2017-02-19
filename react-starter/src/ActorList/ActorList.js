@@ -58,6 +58,7 @@ class ActorList extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleChange_init = this.handleChange_init.bind(this);
     this.handle_remove = this.handle_remove.bind(this);
+    this.addActor = this.addActor.bind(this);
   }
   
   handleChange(id, value) {
@@ -79,6 +80,20 @@ class ActorList extends React.Component {
     this.setState({ACTORS: actors});
   }
 
+  addActor() {
+    let actors = this.state.ACTORS.slice();
+    
+    let maxId = 0;  // should probably improve this
+    for (let i=0; i < actors.length; i++) {
+      if (actors[i].id > maxId) { maxId = actors[i].id }
+    }
+    let newId = maxId+1;
+
+    actors.push({name: 'New Actor', initiative: '', id: newId});
+    this.setState({ACTORS: actors});
+
+  }
+
   render() {
   
     var chips = [];
@@ -98,6 +113,7 @@ class ActorList extends React.Component {
             <h1 className="panel-header-title">Character List</h1>
           </div>
         </div>
+        <div className="btn-newActor" onClick={this.addActor} >Add Actor</div>
         <ul className="ActorList">
           {chips}
         </ul>

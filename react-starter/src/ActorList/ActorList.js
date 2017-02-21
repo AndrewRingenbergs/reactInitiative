@@ -11,13 +11,15 @@ class ActorChip extends React.Component {
   }
 
   handleChange(e) {
-    console.log('change in: ',this.props.actor.id,' to ',e.target.value);
-    this.props.handleChange(this.props.actor.id,e.target.value);
+    console.log('change in: ',this.props.actor,' to ',e.target.value);
+    this.props.handleChange(this.props.actor,e.target.value);
   }
 
   handleChange_init(e) {
-    console.log(this.props.actor.id,': initiative change to: ',e.target.value);
-    this.props.handleChange_init(this.props.actor.id,e.target.value);
+    console.log(this.props.actor,': initiative change to: ',e.target.value);
+    if (Number.isInteger(parseInt(e.target.value))) {
+      this.props.handleChange_init(this.props.actor,parseInt(e.target.value));
+    }
   }
 
   handle_remove(e) {
@@ -47,6 +49,13 @@ class ActorChip extends React.Component {
 
 class ActorList extends React.Component {
   constructor(props) {
+    super(props);
+    //this.handleChange = this.handleChange.bind(this);
+    //this.handleChange_init = this.handleChange_init.bind(this);
+    //this.handle_remove = this.handle_remove.bind(this);
+  }
+  
+  /*constructor(props) {
     super(props);
     this.state = {
         ACTORS: [
@@ -92,18 +101,18 @@ class ActorList extends React.Component {
     actors.push({name: 'New Actor', initiative: '', id: newId});
     this.setState({ACTORS: actors});
 
-  }
+  }*/
 
   render() {
   
     var chips = [];
     
-    var testfunction = this.handleChange; // why do i have to do this?
-    var fn_handleChange_init = this.handleChange_init;
-    var fn_handle_remove = this.handle_remove;
+    var testfunction = this.props.handleChange; // why do i have to do this?
+    var fn_handleChange_init = this.props.handleChange_init;
+    var fn_handle_remove = this.props.handle_remove;
 
-    console.log(this.state.ACTORS);
-    this.state.ACTORS.forEach(function(actor) {
+    console.log(this.props.ACTORS);
+    this.props.ACTORS.forEach(function(actor) {
       chips.push(<ActorChip actor={actor} key={actor.id} handleChange={testfunction} handleChange_init={fn_handleChange_init} handle_remove={fn_handle_remove}/>);
     });
     return (
@@ -113,7 +122,7 @@ class ActorList extends React.Component {
             <h1 className="panel-header-title">Character List</h1>
           </div>
         </div>
-        <div className="btn-newActor" onClick={this.addActor} >Add Actor</div>
+        <div className="btn-newActor" onClick={this.props.addActor} >Add Actor</div>
         <ul className="ActorList">
           {chips}
         </ul>

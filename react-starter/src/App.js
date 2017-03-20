@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import logo from './logo.svg';
 import './App.css';
 import ActorList from './ActorList/ActorList.js';
@@ -84,9 +85,6 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <div>
-          <InitiativeTrack ACTORS={this.state.ACTORS} restart_combat={this.restart_combat} />
-        </div>
-        <div>
           <ActorList ACTORS={this.state.ACTORS} handleChange={this.handleChange} handleChange_init={this.handleChange_init} handle_remove={this.handle_remove} addActor={this.addActor} />
         </div>
       </div>
@@ -95,3 +93,8 @@ class App extends Component {
 }
 
 export default App;
+
+/*<div>
+          <InitiativeTrack ACTORS={this.state.ACTORS} restart_combat={this.restart_combat} />
+        </div>
+*/

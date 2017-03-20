@@ -17,7 +17,7 @@ import * as firebase from 'firebase';
   firebase.initializeApp(config);
 
 class App extends Component {
-    constructor(props) {
+    /*constructor(props) {
     super(props);
     this.state = {
         ACTORS: [
@@ -31,8 +31,8 @@ class App extends Component {
     this.handle_remove = this.handle_remove.bind(this);
     this.addActor = this.addActor.bind(this);
     this.restart_combat = this.restart_combat.bind(this);
-  }
-  
+  }*/
+  /*
   handleChange(target, value) {
     const actors = this.state.ACTORS.slice();
     actors[this.state.ACTORS.indexOf(target)].name = value;
@@ -72,7 +72,7 @@ class App extends Component {
       actor.initiative = '';
     });
     this.setState({ACTORS: actors});
-  }
+  }*/
 
   render() {
     return (
@@ -85,14 +85,24 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <div>
-          <ActorList ACTORS={this.state.ACTORS} handleChange={this.handleChange} handleChange_init={this.handleChange_init} handle_remove={this.handle_remove} addActor={this.addActor} />
+          <ActorList ACTORS={this.props.ACTORS} handleChange={this.handleChange} handleChange_init={this.handleChange_init} handle_remove={this.handle_remove} addActor={this.addActor} />
         </div>
       </div>
     );
   }
 }
 
-export default App;
+//
+
+function mapStateToProps(state) {
+  return {
+    ACTORS: state.myData.ACTORS
+  };
+}
+
+export default connect(mapStateToProps)(App);
+
+//export default App;
 
 /*<div>
           <InitiativeTrack ACTORS={this.state.ACTORS} restart_combat={this.restart_combat} />

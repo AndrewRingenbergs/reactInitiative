@@ -1,7 +1,11 @@
 //import { UPDATE_STATE } from '../actions';
 
 const initialState =  {
-  todoList: [1, 2, 4, 5]
+  ACTORS: [
+        {name: 'Actor A', initiative: 1, id: 0},
+        {name: 'Actor B', initiative: 15, id: 1},
+        {name: 'Actor d', initiative: 3, id: 2}
+      ]
 };
 
 export default function basefunction(state = initialState, action) {

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import logo from './logo.svg';
 import './App.css';
 import ActorList from './ActorList/ActorList.js';
 import InitiativeTrack from './InitiativeTracker/InitiativeTracker.js'
+import * as Actions from './actions'; // [ TODO: why can't I use '..'' ? ]
 import * as firebase from 'firebase';
 
 // Initialize Firebase
@@ -75,6 +77,7 @@ class App extends Component {
   }*/
 
   render() {
+      //console.log(this.props);
     return (
       <div className="App">
         <div className="App-header">
@@ -85,14 +88,13 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <div>
-          <ActorList ACTORS={this.props.ACTORS} handleChange={this.handleChange} handleChange_init={this.handleChange_init} handle_remove={this.handle_remove} addActor={this.addActor} />
+          <ActorList ACTORS={this.props.ACTORS} handleChange={this.props.actions.updateName} handleChange_init={this.props.actions.updateInitiative} handle_remove={this.props.actions.removeActor} addActor={this.props.actions.addActor} />
         </div>
       </div>
     );
   }
 }
 
-//
 
 function mapStateToProps(state) {
   return {
@@ -100,7 +102,13 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(App);
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(Actions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 //export default App;
 

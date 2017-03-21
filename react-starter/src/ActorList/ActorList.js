@@ -11,15 +11,16 @@ class ActorChip extends React.Component {
   }
 
   handleChange(e) {
-    console.log('change in: ',this.props.actor,' to ',e.target.value);
+    //console.log('change in: ',this.props.actor,' to ',e.target.value);
     this.props.handleChange(this.props.actor,e.target.value);
   }
 
   handleChange_init(e) {
-    console.log(this.props.actor,': initiative change to: ',e.target.value);
+    /*console.log(this.props.actor,': initiative change to: ',e.target.value);
     if (Number.isInteger(parseInt(e.target.value))) {
       this.props.handleChange_init(this.props.actor,parseInt(e.target.value));
-    }
+    }*/
+    this.props.handleChange_init(this.props.actor,e.target.value);
   }
 
   handle_remove(e) {

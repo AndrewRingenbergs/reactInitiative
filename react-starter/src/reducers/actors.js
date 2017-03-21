@@ -1,4 +1,4 @@
-//import { UPDATE_STATE } from '../actions';
+import { REMOVE_ACTOR, ADD_ACTOR, UPDATE_NAME, UPDATE_INITIATIVE } from '../actions';
 
 const initialState =  {
   ACTORS: [
@@ -8,13 +8,72 @@ const initialState =  {
       ]
 };
 
-export default function basefunction(state = initialState, action) {
+const detail = (state = {}, action) => {
   switch (action.type) {
-    /*case UPDATE_STATE:
+    case 'REMOVE_ACTOR':
+        let newActorsList = state.ACTORS.slice();
+      console.log('remove action triggered', newActorsList, newActorsList.indexOf(action.payload));
+      if (state.ACTORS.indexOf(action.payload) > -1) {
+          newActorsList.splice(state.ACTORS.indexOf(action.payload), 1);
+        return newActorsList;
+      }
+      else { return state.ACTORS };
+    case 'ADD_ACTOR':
+      {
+        console.log('add actor');
+        let actors = state.ACTORS.slice();
+        
+        let maxId = 0;  // should probably improve this
+        for (let i=0; i < actors.length; i++) {
+          if (actors[i].id > maxId) { maxId = actors[i].id }
+        }
+        let newId = maxId+1;
+
+        actors.push({name: 'New Actor', initiative: '', id: newId});
+
+        return actors;
+      }
+    case 'UPDATE_NAME':
+      {
+        const actors = state.ACTORS.slice();
+        actors[state.ACTORS.indexOf(action.payload)].name = action.name;
+        return actors;
+      }
+    case 'UPDATE_INITIATIVE':
+      {
+        const actors = state.ACTORS.slice();
+        actors[state.ACTORS.indexOf(action.payload)].initiative = action.initiative;
+        return actors;
+      }
+    default:
+      return state
+  }
+}
+
+export default function actorsReducer(state = initialState, action) {
+  switch (action.type) {
+    case REMOVE_ACTOR:
       return {
-        ...state, todoList: action.payload.todoList
-      };*/
+          ...state, ACTORS: detail(state, action)
+      };
+    case ADD_ACTOR:
+      return {
+          ...state, ACTORS: detail(state, action)
+      };
+    case UPDATE_NAME:
+      return {
+        ...state, ACTORS: detail(state, action) 
+    }
+    case UPDATE_INITIATIVE:
+      return {
+        ...state, ACTORS: detail(state, action) 
+    }
     default:
       return state;
   }
 }
+
+ /* 
+const actors = this.state.ACTORS.slice();
+    actors[this.state.ACTORS.indexOf(target)].initiative = value;
+*/

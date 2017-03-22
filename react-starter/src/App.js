@@ -88,7 +88,7 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <div>
-          <ActorList ACTORS={this.props.ACTORS} handleChange={this.props.actions.updateName} handleChange_init={this.props.actions.updateInitiative} handle_remove={this.props.actions.removeActor} addActor={this.props.actions.addActor} />
+          <ActorList ACTORS={this.props.ACTORS} updateName={this.props.actions.updateName} updateInitiative={this.props.actions.updateInitiative} removeActor={this.props.actions.removeActor} addActor={this.props.actions.addActor} />
         </div>
       </div>
     );

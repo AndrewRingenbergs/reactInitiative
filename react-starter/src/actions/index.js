@@ -20,15 +20,15 @@ export function removeActor(target = null) {
 export function updateName(target = null, name) {
   return {
     type: UPDATE_NAME,
-    payload: target,
-    name
+    payload: name,
+    target
   }
 }
 
 export function updateInitiative(target = null, initiative) {
   return {
     type: UPDATE_INITIATIVE,
-    payload: target,
-    initiative
+    payload: initiative,
+    target
   }
 }

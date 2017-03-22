@@ -14,7 +14,7 @@ class ActorChip extends React.Component {
           </span>
           <span className="PropertyEntry">
             <span className="PropertyLabel">Initiative: </span>
-            <input type="number" value={this.props.initiative} onChange={(e) => this.props.updateInitiative(e.target.value)} />
+            <input type="number" value={this.props.initiative} onChange={(e) => this.props.updateInitiative(e.target.value) } />
           </span>
         </span>
         <span className="btn-remove" onClick={this.props.removeActor}> X </span>

@@ -36,13 +36,18 @@ const detail = (state = {}, action) => {
     case 'UPDATE_NAME':
       {
         const actors = state.ACTORS.slice();
-        actors[state.ACTORS.indexOf(action.payload)].name = action.name;
+        actors[state.ACTORS.indexOf(action.target)].name = action.payload;
         return actors;
       }
     case 'UPDATE_INITIATIVE':
       {
         const actors = state.ACTORS.slice();
-        actors[state.ACTORS.indexOf(action.payload)].initiative = action.initiative;
+        if (Number.isInteger(parseInt(action.payload))) {
+          actors[state.ACTORS.indexOf(action.target)].initiative = parseInt(action.payload);
+        }
+        else {
+          actors[state.ACTORS.indexOf(action.target)].initiative = "";
+        }        
         return actors;
       }
     default:

@@ -98,7 +98,7 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    ACTORS: state.myData.ACTORS
+    ACTORS: state.actorList.ACTORS
   };
 }
 

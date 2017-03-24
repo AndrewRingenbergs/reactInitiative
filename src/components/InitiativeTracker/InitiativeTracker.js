@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './InitiativeTracker.css';
 
-class InitiativeTrack extends React.Component {
+class InitiativeTrack extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,15 +18,11 @@ class InitiativeTrack extends React.Component {
     let actorsValid = [];
     let acted_actors_list = this.state.acted_list.slice();
     let active_id = this.state.active_actor_id;
-    let unacted_actors = this.props.ACTORS.slice();
-    //let unacted_actors = actors;
-    let matched = false;
-    let new_pass = false;
     let newRound = this.state.newRound;
     let newInitiativePass = this.state.initiativePass;
 
-    actors.forEach(function(actor) { 
-        if (Number.isInteger(parseInt(actor.initiative))) actorsValid.push(actor);
+    actors.forEach(function(actor) {
+        if (Number.isInteger(parseInt(actor.initiative, 10))) actorsValid.push(actor);
      });
         if ((newRound)&(actorsValid.length > 0)) {
             actors.sort(function (a, b) { return b.initiative - a.initiative; })
@@ -40,11 +36,11 @@ class InitiativeTrack extends React.Component {
             this.setState({acted_list: acted_actors_list});
 
             // determine the next active actor
-            
+
             active_id = '';
             actors.sort(function (a, b) { return b.initiative - a.initiative; })
             for (let a=0; a<actors.length; a++) {
-                if ((active_id==='')&(Number.isInteger(parseInt(actors[a].initiative)))&(actors[a].initiative>newInitiativePass*10)) {
+                if ((active_id==='')&(Number.isInteger(parseInt(actors[a].initiative, 10)))&(actors[a].initiative>newInitiativePass*10)) {
                     if (acted_actors_list.indexOf(actors[a].id)===-1) {
                         active_id = actors[a].id;
                         break;
@@ -59,7 +55,7 @@ class InitiativeTrack extends React.Component {
                 newInitiativePass += 1;
                 // find next valid actor
                 for (let a=0; a<actors.length; a++) {
-                    if ((active_id==='')&(Number.isInteger(parseInt(actors[a].initiative)))&(actors[a].initiative>newInitiativePass*10)) {
+                    if ((active_id==='')&(Number.isInteger(parseInt(actors[a].initiative, 10)))&(actors[a].initiative>newInitiativePass*10)) {
                         if (acted_actors_list.indexOf(actors[a].id)===-1) {
                             active_id = actors[a].id;
                             break;
@@ -97,13 +93,13 @@ class InitiativeTrack extends React.Component {
     const initiativePassMod = this.state.initiativePass*10;
     actors.sort(function (a, b) { return b.initiative - a.initiative; })
     actors.forEach(function(actor) {
-        
+
         let actedType = 'not_acted';
 
         if (Number.isInteger(actor.initiative)) {
             const currentInitiative = actor.initiative-initiativePassMod;
             if (currentInitiative>0) {
-                
+
                 if (actor.id===active_id) {
                     actedType = 'active';
                 }
@@ -114,13 +110,13 @@ class InitiativeTrack extends React.Component {
                         }
                     }
                 }
-                
+
                 chips.push(<li className='inititative-chip' key={actor.id} data-actedType={actedType} >{actor.name} - {currentInitiative}</li>);
             }
         }
     });
     return (
-      <div>    
+      <div>
         <div className="panel-header">
           <div className="inner-panel-header">
             <h1 className="panel-header-title">Initiative Track</h1>

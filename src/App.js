@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import ActorList from './ActorList/ActorList.js';
-import InitiativeTrack from './InitiativeTracker/InitiativeTracker.js'
+import ActorList from './components/ActorList';
+import InitiativeTrack from './components/InitiativeTracker'
 import * as firebase from 'firebase';
 
-// Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyD6LM72rRoARVoOQuQ_cJG1vz2ccOWhKuk",
-    authDomain: "reactinit-f76f4.firebaseapp.com",
-    databaseURL: "https://reactinit-f76f4.firebaseio.com",
-    storageBucket: "reactinit-f76f4.appspot.com",
-    messagingSenderId: "48847842492"
-  };
-  firebase.initializeApp(config);
+import firebaseConfig from './firebaseConfig.json';
+
 
 class App extends Component {
     constructor(props) {
@@ -31,13 +24,17 @@ class App extends Component {
     this.addActor = this.addActor.bind(this);
     this.restart_combat = this.restart_combat.bind(this);
   }
-  
+
+  componentWillMount() {
+    firebase.initializeApp(firebaseConfig);
+  }
+
   handleChange(target, value) {
     const actors = this.state.ACTORS.slice();
     actors[this.state.ACTORS.indexOf(target)].name = value;
     this.setState({ACTORS: actors});
   }
-  
+
   handleChange_init(target, value) {
     const actors = this.state.ACTORS.slice();
     actors[this.state.ACTORS.indexOf(target)].initiative = value;
@@ -53,7 +50,7 @@ class App extends Component {
 
   addActor() {
     let actors = this.state.ACTORS.slice();
-    
+
     let maxId = 0;  // should probably improve this
     for (let i=0; i < actors.length; i++) {
       if (actors[i].id > maxId) { maxId = actors[i].id }
